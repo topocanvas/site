@@ -1,0 +1,14 @@
+﻿node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+.next/
+.turbo/
+.cache/
+dist/
+build/
+coverage/
+.env*
+*.local
+.DS_Store
+Thumbs.db
