@@ -3,20 +3,121 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-
     <title>topoCanvas</title>
 
+    <!-- Icons (optional if already added) -->
     <link rel="icon" href="/favicon.png">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
+    <!-- Social meta (safe to keep even if minimal content) -->
     <meta property="og:title" content="topoCanvas">
     <meta property="og:description" content="The canvas for places.">
     <meta property="og:url" content="https://www.topocanvas.app/">
-    <meta property="og:image" content="https://www.topocanvas.app/og.png">
     <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Mobile UI color -->
+    <meta name="theme-color" content="#0b0f17">
+
+    <style>
+      :root{
+        --bg: #0b0f17;            /* deep navy */
+        --bg-soft: #101726;       /* softer panel */
+        --text: #eef2f7;          /* near white */
+        --muted: #a9b4c7;
+        --purple: #7c5cff;        /* accent */
+        --purple-2: #5b46d6;
+        --grid: #1e2637;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        height: 100%;
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Background flourish: subtle radial + purple accent glow + faint grid */
+      .bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        background:
+          radial-gradient(1200px 600px at 20% 10%, rgba(124,92,255,0.08), transparent 60%),
+          radial-gradient(800px 800px at 80% 80%, rgba(91,70,214,0.08), transparent 60%),
+          linear-gradient(0deg, var(--bg), var(--bg));
+      }
+      .bg::before {
+        content: "";
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(to right, var(--grid) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+        background-size: 64px 64px, 64px 64px;
+        opacity: .25;
+        mask-image: radial-gradient(1200px 800px at 50% 50%, rgba(0,0,0,.5), transparent 70%);
+      }
+
+      .wrap {
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 6vh 20px;
+      }
+      .card {
+        text-align: center;
+        background: color-mix(in oklab, var(--bg-soft) 92%, black 8%);
+        border: 1px solid rgba(255,255,255,.06);
+        border-radius: 20px;
+        padding: clamp(24px, 5vw, 48px);
+        box-shadow:
+          0 10px 30px rgba(0,0,0,.35),
+          0 0 0 1px rgba(124,92,255,.10) inset;
+        backdrop-filter: blur(6px);
+        max-width: 820px;
+        width: 100%;
+      }
+      .brand {
+        font-size: clamp(36px, 6.5vw, 64px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin: 0 0 10px;
+      }
+      .tagline {
+        font-size: clamp(16px, 2.4vw, 22px);
+        color: var(--muted);
+        margin: 0 0 18px;
+      }
+      .pill {
+        display: inline-block;
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: var(--purple);
+        background: rgba(124,92,255,.12);
+        border: 1px solid rgba(124,92,255,.25);
+      }
+
+      /* Respect user preference for reduced motion */
+      @media (prefers-reduced-motion: no-preference) {
+        .card { transition: transform .25s ease, box-shadow .25s ease; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+      }
+    </style>
   </head>
   <body>
-    <h1>topoCanvas</h1>
-    <p>The canvas for places. Layers, routes, heritage, and local knowledge.</p>
+    <div class="bg" aria-hidden="true"></div>
+
+    <main class="wrap">
+      <section class="card" aria-labelledby="brand">
+        <div class="pill" aria-label="Launch status">Launching soon</div>
+        <h1 id="brand" class="brand">topoCanvas</h1>
+        <p class="tagline">The canvas for places.</p>
+      </section>
+    </main>
   </body>
 </html>
